@@ -1,24 +1,34 @@
+# 1. اسم مسار العمل (Workflow) كما يظهر في تبويب Actions داخل GitHub
 name: Security Scan with Bandit
 
+# 2. تحديد الأحداث المشغّلة (Triggers): متى ينطلق هذا المسار السحابي آلياً؟ [1]
 on:
-  push:
-    branches: [ "main" ]
+  push: # ينطلق الفحص تلقائياً فور رفع أي كود جديد (Push) [1]
+    branches: [ "main" ] # يقتصر التشغيل عند الرفع على الفرع الرئيسي (main) فقط
 
+# 3. قائمة الوظائف (Jobs): المهام التي سيقوم بها الخادم السحابي
 jobs:
-  bandit-security-check:
-    runs-on: ubuntu-latest
+  bandit-security-check: # المعرف الفريد للوظيفة (Job ID)
+    runs-on: ubuntu-latest # حجز خادم افتراضي سحابي يعمل بأحدث نظام تشغيل أوبونتو [3]
 
+    # 4. تسلسل الخطوات (Steps): الأوامر التي تُنفّذ بالترتيب داخل الخادم
     steps:
+      # الخطوة الأولى: جلب الكود المصدري من المستودع إلى بيئة التشغيل السحابية [1]
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 # استخدام الإجراء القياسي المعتمد لجلب الملفات [1]
 
+      # الخطوة الثانية: إعداد وتهيئة بيئة لغة Python على الخادم السحابي [1]
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5 # استخدام الإجراء القياسي لتجهيز بايثون [1]
         with:
-          python-version: '3.10'
+          python-version: '3.10' # تحديد الإصدار المطلوب تثبيته (3.10)
 
+      # الخطوة الثالثة: تثبيت أداة الفحص الأمني (Bandit) داخل البيئة
       - name: Install Bandit Security Scanner
-        run: pip install bandit
+        run: pip install bandit # أمر سطر الأوامر لتثبيت الحزمة عبر pip
 
+      # الخطوة الرابعة: تشغيل الفحص الأمني على كافة ملفات المشروع
       - name: Run Bandit Scan
+        # الخيار -r يعني الفحص التكراري (Recursive) لكافة الملفات والمجلدات
+        # النقطة . تعني المجلد الحالي للمستودع بالكامل
         run: bandit -r .
