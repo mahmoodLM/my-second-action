@@ -8,7 +8,8 @@ def run_user_script(user_input):
     
     # --- [الحالة الآمنة حالياً: ✔ Exit Code 0] ---
     return ast.literal_eval(user_input)
-    
+
+
     # --- [الحالة الخطرة: ❌ Exit Code 1] ---
     # للتبديل للحالة الخطرة: ضع (#) على السطر الآمن أعلاه، وأزل (#) عن السطر التالي:
     # return eval(user_input)  # ثغرة B307: eval تتيح للمخترق تنفيذ أكواد خبيثة
