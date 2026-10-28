@@ -7,12 +7,12 @@ def run_user_script(user_input):
     # =========================================================
     
     # --- [الحالة الآمنة حالياً: ✔ Exit Code 0] ---
-    return ast.literal_eval(user_input)
+    # return ast.literal_eval(user_input)
 
 
     # --- [الحالة الخطرة: ❌ Exit Code 1] ---
     # للتبديل للحالة الخطرة: ضع (#) على السطر الآمن أعلاه، وأزل (#) عن السطر التالي:
-    # return eval(user_input)  # ثغرة B307: eval تتيح للمخترق تنفيذ أكواد خبيثة
+    return eval(user_input)  # ثغرة B307: eval تتيح للمخترق تنفيذ أكواد خبيثة
 
 
 # =========================================================
@@ -20,8 +20,8 @@ def run_user_script(user_input):
 # =========================================================
 
 # --- [الحالة الآمنة حالياً: ✔ Exit Code 0] ---
-DB_PASSWORD = os.getenv("DB_PASSWORD")
+# DB_PASSWORD = os.getenv("DB_PASSWORD")
 
 # --- [الحالة الخطرة: ❌ Exit Code 1] ---
 # للتبديل للحالة الخطرة: ضع (#) على السطر الآمن أعلاه، وأزل (#) عن السطر التالي:
-# DB_PASSWORD = "Hardcoded_Secret_Password_123"  # ثغرة B105: كلمة سر صريحة ومكشوفة في الكود
+DB_PASSWORD = "Hardcoded_Secret_Password_123"  # ثغرة B105: كلمة سر صريحة ومكشوفة في الكود
